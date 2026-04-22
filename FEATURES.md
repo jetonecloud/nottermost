@@ -60,7 +60,7 @@ This file tracks which features are done, in progress, or not started.
 - [X] Uploads, previews, retention, permissions
 
 ### Search
-- [ ] Full-text search + filters (OpenSearch not wired)
+- [X] Full-text search + filters (OpenSearch not wired)
 
 ### User profiles / admin
 - [ ] Display names, avatars, status, profile editing
