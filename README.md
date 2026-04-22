@@ -73,6 +73,42 @@ These drive service choice, topology, and budget:
 
 ---
 
+## Local development
+
+Local testing is fully Dockerized (frontend + backend + Postgres + Redis).
+
+### Prereqs
+
+- Docker Desktop
+
+### Run
+
+1. Create a `.env` file from the example:
+   - Copy `.env.example` → `.env`
+2. Start everything:
+   - `docker compose up --build`
+
+### URLs
+
+- **Web**: `http://localhost:3000`
+- **API**: `http://localhost:4000` (`/healthz`)
+
+### Quick end-to-end test
+
+- Create account A at `/register`
+- Create a workspace
+- In another browser/profile, create account B
+- Back as A, open the workspace and **add member** by B’s email
+- Click **DM** next to B, send a message, and verify it appears in real time
+
+### Notes / troubleshooting
+
+- The API syncs the local DB schema automatically in development (dev-only convenience).
+- If ports are busy, change `WEB_PORT` / `API_PORT` in `.env`.
+- Reset everything (including volumes): `docker compose down -v`
+
+---
+
 ## Application stack
 
 - **Web**: Next.js
