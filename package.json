@@ -1,0 +1,15 @@
+{
+  "name": "nottermost",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "docker compose up --build",
+    "down": "docker compose down -v",
+    "lint": "npm -ws run lint",
+    "typecheck": "npm -ws run typecheck"
+  }
+}
+
