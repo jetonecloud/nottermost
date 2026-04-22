@@ -4,6 +4,7 @@ import { env } from "./env.js";
 import { prisma } from "./prisma.js";
 import { authRouter } from "./routes/auth.js";
 import { workspacesRouter } from "./routes/workspaces.js";
+import { dmRouter } from "./routes/dm.js";
 import { createHttpServerWithWs } from "./ws/server.js";
 
 const app = express();
@@ -19,6 +20,7 @@ app.get("/healthz", (_req, res) => res.json({ ok: true }));
 
 app.use("/auth", authRouter);
 app.use("/workspaces", workspacesRouter);
+app.use("/dm", dmRouter);
 
 const server = createHttpServerWithWs(app);
 
