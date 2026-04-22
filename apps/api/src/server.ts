@@ -6,6 +6,7 @@ import { authRouter } from "./routes/auth.js";
 import { workspacesRouter } from "./routes/workspaces.js";
 import { dmRouter } from "./routes/dm.js";
 import { createHttpServerWithWs } from "./ws/server.js";
+import { ensureDevDbSchema } from "./startup/ensureDevDbSchema.js";
 
 const app = express();
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use("/dm", dmRouter);
 const server = createHttpServerWithWs(app);
 
 async function main() {
+  await ensureDevDbSchema();
   await prisma.$connect();
   server.listen(env.PORT, () => {
     // eslint-disable-next-line no-console
