@@ -69,4 +69,3 @@ This file tracks what’s implemented vs not implemented for the current “Slac
 - [ ] Observability (metrics/tracing/log correlation IDs/dashboards)
 - [ ] Automated tests (unit/integration/e2e)
 - [ ] Production deployment implementation (canary/blue-green/rolling pipelines, secrets rotation, etc.)
-

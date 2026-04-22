@@ -7,9 +7,32 @@ The format is based on **Keep a Changelog**, and this project aims to follow **S
 ## [Unreleased]
 
 ### Added
-- Repository meta-docs for operations: `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`, `SUPPORT.md`, `CODE_OF_CONDUCT.md`
-- GitHub templates: issue templates and PR template
+- Docker-first local dev stack: `docker-compose.yml` (web, api, Postgres, Redis) + `.env.example`
+- Monorepo scaffolding:
+  - `apps/api` (Node/Express + WebSockets)
+  - `apps/web` (Next.js)
+  - `packages/shared` (shared TypeScript types)
+- API features:
+  - JWT auth (`/auth/register`, `/auth/login`)
+  - Workspaces + membership management
+  - 1:1 DM threads + messages with cursor pagination
+  - WebSocket realtime `message.created` with Redis pub/sub fan-out
+  - Health endpoint (`GET /healthz`)
+- Web UI:
+  - Register/login pages
+  - Workspace list/create
+  - Workspace members page (including “add member by email”)
+  - DM thread page with history pagination + live updates
+- Documentation/meta:
+  - Repository policies: `CONTRIBUTING.md`, `SECURITY.md`, `SUPPORT.md`, `CODE_OF_CONDUCT.md`
+  - GitHub templates: issue templates + PR template
+  - `FEATURES.md` feature tracker
 
 ### Changed
 - README tightened while preserving architecture; added operational maturity, production deployments, incident handling, scaling, and real-environment monitoring sections
+- README: add local Docker development instructions
+
+### Fixed
+- Local Docker builds: avoid `workspace:*` dependency spec in container npm installs
+- API startup in Docker: initialize Prisma only after dev schema sync/generate
 
