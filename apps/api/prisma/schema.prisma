@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String             @id @default(uuid())
+  email        String             @unique
+  passwordHash String
+  createdAt    DateTime           @default(now())
+
+  memberships  WorkspaceMember[]
+  sentMessages Message[]
+}
+
+model Workspace {
+  id        String             @id @default(uuid())
+  name      String
+  createdAt DateTime           @default(now())
+
+  members   WorkspaceMember[]
+  threads   DirectThread[]
+}
+
+model WorkspaceMember {
+  workspaceId String
+  userId      String
+  role        String
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([workspaceId, userId])
+  @@index([userId])
+}
+
+model DirectThread {
+  id          String    @id @default(uuid())
+  workspaceId String
+  userAId     String
+  userBId     String
+  createdAt   DateTime  @default(now())
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  messages    Message[]
+
+  @@index([workspaceId])
+  @@unique([workspaceId, userAId, userBId])
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  threadId  String
+  senderId  String
+  body      String
+  createdAt DateTime @default(now())
+
+  thread    DirectThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  sender    User         @relation(fields: [senderId], references: [id], onDelete: Restrict)
+
+  @@index([threadId, createdAt])
+}
+
