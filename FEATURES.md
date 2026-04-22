@@ -30,6 +30,9 @@ This file tracks what’s implemented vs not implemented for the current “Slac
 - [X] Docker Compose stack: web + api + Postgres + Redis
 - [X] Basic health endpoint: `GET /healthz`
 
+### Documentation/meta
+- [X] Engineering guidelines for contributors + AI (`ENGINEERING_GUIDELINES.md`)
+
 ---
 
 ## Not implemented (not done)
