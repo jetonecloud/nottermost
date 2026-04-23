@@ -275,6 +275,8 @@ a.card:hover {
 .sidebarNav {
   padding: 4px 10px 10px;
   overflow: auto;
+  flex: 1;
+  min-height: 0;
 }
 
 .sidebarSection {
@@ -861,7 +863,7 @@ a.card:hover {
 }
 
 .topbarSearchInput {
-  padding-left: 34px;
+  /* padding is applied via .uiInput; set below with higher specificity */
 }
 
 /* UI primitives */
@@ -952,6 +954,98 @@ a.card:hover {
   font-size: 14px;
   outline: none;
   box-shadow: var(--shadowSm);
+}
+
+/* Ensure search icon doesn't overlap placeholder/value. */
+.uiInput.topbarSearchInput {
+  padding-left: 34px;
+}
+
+/* Full-bleed pages (no "card" chrome). */
+.slackPage--full {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Responsive shell */
+.sidebarToggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radiusMd);
+  border: 1px solid var(--border2);
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: var(--shadowSm);
+}
+
+.sidebarToggle:hover {
+  filter: brightness(0.99);
+}
+
+.sidebarOverlay {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .appFrame {
+    grid-template-columns: 1fr;
+  }
+
+  .appSidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 86vw;
+    z-index: 50;
+    transform: translateX(-102%);
+    transition: transform 160ms ease;
+  }
+
+  .appFrame.appFrame--sidebarOpen .appSidebar {
+    transform: translateX(0);
+  }
+
+  .sidebarOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    z-index: 40;
+    display: none;
+  }
+
+  .appFrame.appFrame--sidebarOpen .sidebarOverlay {
+    display: block;
+  }
+
+  .sidebarToggle {
+    display: inline-flex;
+  }
+
+  .appHeader {
+    gap: 10px;
+  }
+
+  .topbarSearch {
+    width: min(720px, 70vw);
+  }
+
+  .appContent--withRightRail {
+    grid-template-columns: 1fr;
+  }
+
+  .chatLayout--withThread {
+    grid-template-columns: 1fr;
+  }
+
+  .chatMain {
+    border-right: none;
+  }
 }
 
 .uiInput:focus,

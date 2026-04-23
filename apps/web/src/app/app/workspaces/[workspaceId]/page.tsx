@@ -69,8 +69,8 @@ export default function WorkspacePage() {
   }, [workspaceId]);
 
   return (
-    <div style={{ padding: 16, height: "100%", minHeight: 0 }}>
-      <div className="slackPage">
+    <div style={{ height: "100%", minHeight: 0 }}>
+      <div className="slackPage slackPage--full">
         <div className="slackPageHeader">
           <div>
             <div className="slackPageTitle">Workspace</div>

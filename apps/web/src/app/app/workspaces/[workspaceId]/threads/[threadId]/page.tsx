@@ -212,8 +212,19 @@ export default function ThreadPage() {
               <div className="chatComposerRow">
                 <div className="col" style={{ gap: 8 }}>
                   <div className="row" style={{ justifyContent: "space-between" }}>
-                    <label className="uiLink" style={{ cursor: uploading ? "not-allowed" : "pointer" }}>
-                      Attach
+                    <label style={{ cursor: uploading ? "not-allowed" : "pointer" }}>
+                      <Button type="button" size="sm" variant="secondary" disabled={uploading}>
+                        <svg viewBox="0 0 20 20" width="16" height="16" fill="none" aria-hidden="true">
+                          <path
+                            d="M7.5 10.5 12 6a2.2 2.2 0 1 1 3.1 3.1l-5.4 5.4a4 4 0 0 1-5.7-5.7l6-6"
+                            stroke="currentColor"
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        Attach
+                      </Button>
                       <input
                         type="file"
                         multiple
