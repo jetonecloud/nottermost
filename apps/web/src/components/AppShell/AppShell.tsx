@@ -52,13 +52,22 @@ export function AppShell({
   const letter = useMemo(() => (title ?? "W").slice(0, 1).toUpperCase(), [title]);
   const [avatarBroken, setAvatarBroken] = useState(false);
   const showAvatarImg = Boolean(workspaceAvatarUrl) && !avatarBroken;
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     setAvatarBroken(false);
   }, [workspaceAvatarUrl]);
 
   return (
-    <div className="appFrame">
+    <div className={["appFrame", sidebarOpen ? "appFrame--sidebarOpen" : ""].filter(Boolean).join(" ")}>
+      <div
+        className="sidebarOverlay"
+        role="presentation"
+        onClick={() => setSidebarOpen(false)}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") setSidebarOpen(false);
+        }}
+      />
       <aside className="appSidebar">
         <div className="sidebarTop">
           <Link className="workspaceSwitcher" href={`/app/workspaces/${workspaceId}/profile`} title="Profile">
@@ -169,7 +178,22 @@ export function AppShell({
       </aside>
 
       <div className="appMain">
-        <header className="appHeader">{header}</header>
+        <header className="appHeader">
+          <button
+            type="button"
+            className="sidebarToggle"
+            aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
+            aria-expanded={sidebarOpen}
+            onClick={() => setSidebarOpen((v) => !v)}
+          >
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="none" aria-hidden="true">
+              <path d="M3.5 5.5h13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              <path d="M3.5 10h13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              <path d="M3.5 14.5h13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          </button>
+          <div style={{ minWidth: 0, flex: 1 }}>{header}</div>
+        </header>
         <div className={["appContent", rightRail ? "appContent--withRightRail" : ""].filter(Boolean).join(" ")}>
           <div className="appPane">{children}</div>
           {rightRail ? <div className="appRightRail">{rightRail}</div> : null}

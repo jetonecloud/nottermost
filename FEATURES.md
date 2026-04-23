@@ -54,6 +54,7 @@ This file tracks which features are done, in progress, or not started.
 - [X] Sidebar quick actions + Settings page (logout)
 - [X] Global search in the top bar
 - [X] Dynamic browser tab titles per page
+- [X] Responsive app shell (mobile sidebar toggle + adaptive rails)
 
 ### Files
 - [X] Uploads, previews, retention, permissions
