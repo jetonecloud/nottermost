@@ -69,12 +69,12 @@ export default function WorkspacePage() {
   }, [workspaceId]);
 
   return (
-    <div style={{ padding: 16, overflow: "auto" }}>
+    <div style={{ padding: 16, height: "100%", minHeight: 0 }}>
       <div className="slackPage">
         <div className="slackPageHeader">
           <div>
             <div className="slackPageTitle">Workspace</div>
-            <div className="slackPageSubtitle">{workspaceId}</div>
+            <div className="slackPageSubtitle">Overview</div>
           </div>
           {error ? <div className="topbarError">Error: {error}</div> : null}
         </div>
@@ -142,9 +142,6 @@ export default function WorkspacePage() {
                       </span>
                     ) : null}
                   </div>
-                  <div className="muted" style={{ fontSize: 12 }}>
-                    {c.id}
-                  </div>
                 </div>
                 <div className="row">
                   {c.isMember ? (
@@ -183,7 +180,7 @@ export default function WorkspacePage() {
                 <div key={i.id} className="row" style={{ justifyContent: "space-between" }}>
                   <div className="col" style={{ gap: 2 }}>
                     <div>
-                      Invite to <b>{i.channelName}</b>
+                      Invite to {i.channelName}
                     </div>
                     <div className="muted" style={{ fontSize: 12 }}>
                       from {i.inviterEmail} · {new Date(i.createdAt).toLocaleString()}
@@ -221,7 +218,7 @@ export default function WorkspacePage() {
                   <div className="col" style={{ gap: 2 }}>
                     <div>{m.displayName?.trim() || m.email}</div>
                     <div className="muted" style={{ fontSize: 12 }}>
-                      {m.email} · {m.id} · {m.role}
+                    {m.email} · {m.role}
                       {m.statusText?.trim() ? ` · ${m.statusText.trim()}` : ""}
                     </div>
                   </div>

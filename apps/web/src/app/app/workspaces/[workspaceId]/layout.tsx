@@ -3,10 +3,12 @@
 import type { ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import type { ChannelListItem } from "@nottermost/shared";
 
 import { apiFetch } from "../../../../lib/api";
 import { AppShell } from "../../../../components/AppShell/AppShell";
+import { Input } from "../../../../components/ui/Input";
 
 type DmThreadListItem = {
   id: string;
@@ -22,6 +24,8 @@ type NotifList = { items: Array<{ id: string; readAt: string | null }>; nextCurs
 export default function WorkspaceLayout({ children }: { children: ReactNode }) {
   const params = useParams<{ workspaceId: string }>();
   const workspaceId = useMemo(() => params.workspaceId, [params.workspaceId]);
+  const pathname = usePathname();
+  const router = useRouter();
 
   const [channels, setChannels] = useState<ChannelListItem[]>([]);
   const [dmThreads, setDmThreads] = useState<DmThreadListItem[]>([]);
@@ -117,6 +121,39 @@ export default function WorkspaceLayout({ children }: { children: ReactNode }) {
       label: t.kind === "group" ? t.name ?? t.participantEmails.join(", ") : t.participantEmails.filter((e) => e !== me?.email).join(", "),
     }));
 
+  const channelNameById = useMemo(() => new Map(channels.map((c) => [c.id, c.name])), [channels]);
+  const dmLabelById = useMemo(() => {
+    return new Map(
+      dmThreads.map((t) => [
+        t.id,
+        t.kind === "group"
+          ? t.name ?? t.participantEmails.join(", ")
+          : t.participantEmails.filter((e) => e !== me?.email).join(", "),
+      ]),
+    );
+  }, [dmThreads, me?.email]);
+
+  useEffect(() => {
+    // Dynamic tab titles for "Slack-like" feel.
+    const base = "Nottermost";
+    const parts = pathname.split("/").filter(Boolean);
+    const idx = parts.findIndex((p) => p === "channels");
+    const tidx = parts.findIndex((p) => p === "threads");
+    let page = "Workspace";
+
+    if (idx >= 0 && parts[idx + 1]) {
+      const cid = parts[idx + 1]!;
+      page = `#${channelNameById.get(cid) ?? "channel"}`;
+    } else if (tidx >= 0 && parts[tidx + 1]) {
+      const id = parts[tidx + 1]!;
+      page = dmLabelById.get(id) ?? "Direct messages";
+    } else if (parts.includes("search")) page = "Search";
+    else if (parts.includes("profile")) page = "Profile";
+    else if (parts.includes("settings")) page = "Settings";
+
+    document.title = `${page} • ${base}`;
+  }, [pathname, channelNameById, dmLabelById]);
+
   return (
     <AppShell
       workspaceTitle={me ? me.displayName?.trim() || me.email : null}
@@ -125,7 +162,32 @@ export default function WorkspaceLayout({ children }: { children: ReactNode }) {
       workspaceId={workspaceId}
       header={
         <div className="topbar">
-          <div className="topbarLeft">{error ? <span className="topbarError">Error: {error}</span> : null}</div>
+          <div className="topbarLeft" style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0, flex: 1 }}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const form = e.currentTarget;
+                const fd = new FormData(form);
+                const q = String(fd.get("q") ?? "").trim();
+                if (!q) return;
+                router.push(`/app/workspaces/${workspaceId}/search?q=${encodeURIComponent(q)}`);
+              }}
+              className="topbarSearch"
+            >
+              <span className="topbarSearchIcon" aria-hidden="true">
+                <svg viewBox="0 0 20 20" width="16" height="16" fill="none">
+                  <path
+                    d="M9.2 15.6a6.4 6.4 0 1 1 0-12.8 6.4 6.4 0 0 1 0 12.8Z"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                  />
+                  <path d="M14.1 14.1 17.4 17.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                </svg>
+              </span>
+              <Input name="q" placeholder="Search…" className="topbarSearchInput" />
+            </form>
+            {error ? <span className="topbarError">Error: {error}</span> : null}
+          </div>
           <div className="topbarRight">
             <span className="topbarHint">Notifications</span>
             <span className="notifBell" title={`${unreadNotifs} unread notifications`} aria-label="Notifications">
@@ -148,14 +210,7 @@ export default function WorkspaceLayout({ children }: { children: ReactNode }) {
         </div>
       }
       sections={[
-        {
-          title: "Search",
-          items: [{ key: "search", href: `/app/workspaces/${workspaceId}/search`, label: "Search messages" }],
-        },
-        {
-          title: "You",
-          items: [{ key: "profile", href: `/app/workspaces/${workspaceId}/profile`, label: "Profile" }],
-        },
+        { title: "Workspace", items: [{ key: "home", href: `/app/workspaces/${workspaceId}`, label: "Home" }] },
         { title: "Channels", items: channelItems },
         { title: "Direct messages", items: dmItems },
       ]}

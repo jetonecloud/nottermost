@@ -17,6 +17,7 @@ type ChannelProps = Common & {
   variant: "channel";
   channelId: string;
   message: ChannelMessage;
+  userLabelById?: Record<string, string>;
   showReply?: boolean;
   onOpenThread?: () => void;
 };
@@ -25,6 +26,7 @@ type DmProps = Common & {
   variant: "dm";
   threadId: string;
   message: Message;
+  userLabelById?: Record<string, string>;
 };
 
 type Props = ChannelProps | DmProps;
@@ -44,6 +46,7 @@ export function ChatMessageRow(props: Props) {
   const isMine = myUserId !== null && message.senderId === myUserId;
   const deleted = Boolean(message.deletedAt);
   const reactions: MessageReactionSummary[] = message.reactions ?? [];
+  const senderLabel = props.userLabelById?.[message.senderId] ?? message.senderId;
 
   async function toggleReaction(emoji: string) {
     const row = reactions.find((r) => r.emoji === emoji);
@@ -119,7 +122,7 @@ export function ChatMessageRow(props: Props) {
   return (
     <div className={["msgRow", deleted ? "msgRow--deleted" : ""].filter(Boolean).join(" ")}>
       <div className="msgAvatar" aria-hidden="true">
-        {String(message.senderId ?? "?")
+        {String(senderLabel ?? "?")
           .slice(0, 1)
           .toUpperCase()}
       </div>
@@ -127,7 +130,7 @@ export function ChatMessageRow(props: Props) {
       <div className="msgBody">
         <div className="msgMeta">
           <div className="msgMetaLeft">
-            <span className="msgSender">{message.senderId}</span>
+            <span className="msgSender">{senderLabel}</span>
             <span className="msgTimestamp">
               {createdAtLabel}
               {message.editedAt ? <span> · edited</span> : null}

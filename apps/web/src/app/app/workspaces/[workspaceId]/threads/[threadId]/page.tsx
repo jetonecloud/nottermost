@@ -20,6 +20,8 @@ export default function ThreadPage() {
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [body, setBody] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [threadLabel, setThreadLabel] = useState<string | null>(null);
+  const [userLabelById, setUserLabelById] = useState<Record<string, string>>({});
   const wsRef = useRef<WebSocket | null>(null);
   const [typingUsers, setTypingUsers] = useState<Set<string>>(new Set());
   const [pendingUploads, setPendingUploads] = useState<
@@ -55,10 +57,29 @@ export default function ThreadPage() {
     async function boot() {
       setError(null);
       try {
-        const me = await apiFetch<{ id: string }>("/workspaces/me");
+        const [me, threads, members] = await Promise.all([
+          apiFetch<{ id: string }>("/workspaces/me"),
+          apiFetch<Array<{ id: string; kind: "direct" | "group"; name?: string | null; participantEmails: string[] }>>(
+            `/dm/threads?workspaceId=${encodeURIComponent(workspaceId)}`,
+          ),
+          apiFetch<Array<{ id: string; email: string; displayName?: string | null }>>(
+            `/workspaces/${workspaceId}/members`,
+          ),
+        ]);
         if (cancelled) return;
         myUserIdRef.current = me.id;
         setMyUserId(me.id);
+        const t = threads.find((x) => x.id === threadId);
+        const label =
+          t?.kind === "group"
+            ? t.name ?? t.participantEmails.join(", ")
+            : t
+              ? t.participantEmails.filter((e) => e && e !== "").join(", ")
+              : null;
+        setThreadLabel(label);
+        setUserLabelById(
+          Object.fromEntries(members.map((m) => [m.id, (m.displayName?.trim() || m.email).trim()])),
+        );
 
         await loadFirstPage();
         if (cancelled) return;
@@ -140,8 +161,7 @@ export default function ThreadPage() {
       <div className="chatPage">
         <div className="chatHeader">
           <div className="chatHeaderTitle">
-            <div className="chatHeaderPrimary">Direct messages</div>
-            <div className="chatHeaderSecondary">workspace {workspaceId} · thread {threadId}</div>
+            <div className="chatHeaderPrimary">{threadLabel ?? "Direct messages"}</div>
           </div>
           <div className="chatHeaderActions">
             {error ? <span className="topbarError">Error: {error}</span> : null}
@@ -163,6 +183,7 @@ export default function ThreadPage() {
                     threadId={threadId}
                     message={m}
                     myUserId={myUserId}
+                    userLabelById={userLabelById}
                     onError={(err) => setError(err)}
                   />
                 ))}
@@ -291,7 +312,10 @@ export default function ThreadPage() {
 
               {typingUsers.size ? (
                 <div className="muted" style={{ fontSize: 12, marginTop: 8 }}>
-                  Typing: {Array.from(typingUsers).join(", ")}
+                  Typing:{" "}
+                  {Array.from(typingUsers)
+                    .map((u) => userLabelById[u] ?? u)
+                    .join(", ")}
                 </div>
               ) : null}
             </form>

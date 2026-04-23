@@ -109,7 +109,7 @@ export default function SearchPage() {
                     style={{ display: "block", padding: 12 }}
                   >
                     <div className="muted" style={{ fontSize: 12, marginBottom: 6 }}>
-                      {it.kind.toUpperCase()} · {new Date(it.createdAt).toLocaleString()} · sender {it.senderId}
+                      {it.kind.toUpperCase()} · {new Date(it.createdAt).toLocaleString()}
                     </div>
                     <div style={{ whiteSpace: "pre-wrap" }}>{it.snippet}</div>
                   </Link>
