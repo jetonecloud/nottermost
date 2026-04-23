@@ -26,9 +26,6 @@ export default function RegisterPage() {
               <div className="authSubtitle">Create your account</div>
             </div>
           </div>
-          <Link className="uiLink" href="/" title="Home">
-            Home
-          </Link>
         </div>
 
         <form
@@ -82,7 +79,6 @@ export default function RegisterPage() {
             <span>
               Already have an account? <Link href="/login">Sign in</Link>
             </span>
-            <span className="muted">Local dev</span>
           </div>
         </form>
       </div>
