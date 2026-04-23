@@ -212,7 +212,7 @@ filesRouter.get("/:id/download", async (req, res) => {
   }
 
   res.setHeader("content-type", file.contentType);
-  res.setHeader("content-disposition", `inline; filename=\"${encodeURIComponent(file.filename)}\"`);
+  res.setHeader("content-disposition", `inline; filename="${encodeURIComponent(file.filename)}"`);
   return res.sendFile(abs);
 });
 

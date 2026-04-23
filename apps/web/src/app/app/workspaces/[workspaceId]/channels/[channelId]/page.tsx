@@ -203,7 +203,7 @@ export default function ChannelPage() {
       try {
         ws?.close();
       } catch {
-        // ignore
+        void 0;
       }
     };
   }, [channelId]);
@@ -342,7 +342,7 @@ export default function ChannelPage() {
                           JSON.stringify({ type: "typing.start", scope: "channel", channelId } satisfies WsClientMessage),
                         );
                       } catch {
-                        // ignore
+                        void 0;
                       }
                     }}
                     onBlur={() => {
@@ -351,7 +351,7 @@ export default function ChannelPage() {
                           JSON.stringify({ type: "typing.stop", scope: "channel", channelId } satisfies WsClientMessage),
                         );
                       } catch {
-                        // ignore
+                        void 0;
                       }
                     }}
                   />

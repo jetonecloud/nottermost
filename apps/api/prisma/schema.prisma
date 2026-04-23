@@ -42,7 +42,8 @@ model Workspace {
   createdAt DateTime           @default(now())
 
   members   WorkspaceMember[]
-  threads   DirectThread[] // legacy (1:1 only)
+  // Back-compat: older 1:1 DMs lived in `DirectThread`; new DMs use `DmThread`.
+  threads   DirectThread[]
   dmThreads DmThread[]
   channels  Channel[]
 

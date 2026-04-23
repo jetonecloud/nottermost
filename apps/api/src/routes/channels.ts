@@ -688,7 +688,13 @@ channelsRouter.post("/:channelId/read", async (req, res) => {
     update: { lastReadAt },
   });
 
-  const wsPayload: WsServerMessage = { type: "readState.updated" as any, scope: "channel", channelId: channel.id, userId, lastReadAt: lastReadAt.toISOString() } as any;
+  const wsPayload = {
+    type: "readState.updated",
+    scope: "channel",
+    channelId: channel.id,
+    userId,
+    lastReadAt: lastReadAt.toISOString(),
+  } as unknown as WsServerMessage;
   void publishChannelEvent(channel.id, wsPayload);
   return res.status(204).end();
 });

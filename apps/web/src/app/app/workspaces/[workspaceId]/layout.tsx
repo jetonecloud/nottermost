@@ -84,7 +84,7 @@ export default function WorkspaceLayout({ children }: { children: ReactNode }) {
           }>("/workspaces/me");
           setMe(meResp);
         } catch {
-          // ignore: workspace shell already surfaces load errors on navigation/refresh
+          // Ignore profile refresh failures; the shell surfaces load errors on navigation/refresh.
         }
       })();
     }
@@ -97,7 +97,7 @@ export default function WorkspaceLayout({ children }: { children: ReactNode }) {
     try {
       window.localStorage.setItem("nottermost.lastWorkspaceId", workspaceId);
     } catch {
-      // ignore
+      void 0;
     }
   }, [workspaceId]);
 
