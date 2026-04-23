@@ -56,6 +56,7 @@ The format is based on **Keep a Changelog**, and this project aims to follow **S
 - README: add local Docker development instructions
 - Web UI: updated typography and refreshed the light theme (teal/slate), including less-rounded cards/inputs/buttons
 - Web UI: overhauled chat layout and composer for a more usable, Slack-like experience; aligned workspace pages with the same “Slack-like” UI primitives
+- Web UI: improve workspace shell (sidebar quick actions, global search in top bar, settings page) and set dynamic tab titles per page
 
 ### Fixed
 - Local Docker builds: avoid `workspace:*` dependency spec in container npm installs

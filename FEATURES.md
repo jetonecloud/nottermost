@@ -50,6 +50,11 @@ This file tracks which features are done, in progress, or not started.
 - [X] Slack-like workspace pages + chat surfaces (message rows, headers, thread rail)
 - [X] Light mode is default
 
+### Workspace shell UX
+- [X] Sidebar quick actions + Settings page (logout)
+- [X] Global search in the top bar
+- [X] Dynamic browser tab titles per page
+
 ### Files
 - [X] Uploads, previews, retention, permissions
 

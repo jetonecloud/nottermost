@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Button } from "../ui/Button";
 import { Icon } from "../ui/Icon";
 
 type SidebarSection = {
@@ -60,7 +59,7 @@ export function AppShell({
     <div className="appFrame">
       <aside className="appSidebar">
         <div className="sidebarTop">
-          <div className="workspaceSwitcher">
+          <Link className="workspaceSwitcher" href={`/app/workspaces/${workspaceId}/profile`} title="Profile">
             <div className="workspaceAvatar" aria-hidden="true">
               {showAvatarImg ? (
                 <img
@@ -77,7 +76,7 @@ export function AppShell({
               <div className="workspaceName">{title}</div>
               <div className="workspaceSub">{subtitle}</div>
             </div>
-          </div>
+          </Link>
 
           <div className="sidebarActions">
             <Link className="uiLink" href="/app" title="All workspaces">
@@ -95,6 +94,40 @@ export function AppShell({
                     stroke="currentColor"
                     strokeWidth="1.6"
                     strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Icon>
+            </Link>
+            <Link className="uiLink" href={`/app/workspaces/${workspaceId}/search`} title="Search">
+              <Icon title="Search">
+                <svg viewBox="0 0 20 20" width="18" height="18" fill="none" aria-hidden="true">
+                  <path
+                    d="M9.2 15.6a6.4 6.4 0 1 1 0-12.8 6.4 6.4 0 0 1 0 12.8Z"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                  />
+                  <path
+                    d="M14.1 14.1 17.4 17.4"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </Icon>
+            </Link>
+            <Link className="uiLink" href={`/app/workspaces/${workspaceId}/settings`} title="Settings">
+              <Icon title="Settings">
+                <svg viewBox="0 0 20 20" width="18" height="18" fill="none" aria-hidden="true">
+                  <path
+                    d="M10 12.6a2.6 2.6 0 1 0 0-5.2 2.6 2.6 0 0 0 0 5.2Z"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                  />
+                  <path
+                    d="M16.8 10a6.8 6.8 0 0 0-.1-1l1.2-.9-1.3-2.2-1.5.5a6.7 6.7 0 0 0-1.7-1L13 3H7l-.4 2.4a6.7 6.7 0 0 0-1.7 1l-1.5-.5L2 8.1l1.2.9a7.2 7.2 0 0 0 0 2L2 12l1.3 2.2 1.5-.5a6.7 6.7 0 0 0 1.7 1L7 17h6l.4-2.4a6.7 6.7 0 0 0 1.7-1l1.5.5L18 12l-1.2-.9c.1-.3.1-.7.1-1.1Z"
+                    stroke="currentColor"
+                    strokeWidth="1.3"
                     strokeLinejoin="round"
                   />
                 </svg>
@@ -128,19 +161,7 @@ export function AppShell({
           ))}
         </nav>
 
-        <div className="sidebarBottom">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              // layout doesn't own auth; keep it simple and consistent with existing /app page
-              window.localStorage.removeItem("nottermost.token");
-              window.location.href = "/login";
-            }}
-          >
-            Log out
-          </Button>
-        </div>
+        <div className="sidebarBottom" />
       </aside>
 
       <div className="appMain">
