@@ -73,6 +73,14 @@ These drive service choice, topology, and budget:
 
 ---
 
+## Screenshots
+
+### Conversation view
+
+![Conversation view](screenshots/conversation-view.png)
+
+---
+
 ## Local development
 
 Local testing is fully Dockerized (frontend + backend + Postgres + Redis).

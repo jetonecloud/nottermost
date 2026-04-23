@@ -1,78 +1,160 @@
-## Nottermost
+# Nottermost
 
-A **Mattermost-inspired** team chat app built to practice **distributed-system + AWS ops** end-to-end, using a deliberately minimal product surface area.
+A **Mattermost-inspired** team chat platform built as a **distributed system on AWS**. The scope is intentionally **minimal but essential** to exercise real architecture, operations, and cost trade-offs end to end.
 
-### Table of contents
+## ✨ Overview
 
-- [Demo](#demo)
-- [What we built](#what-we-built)
-- [Architecture (current implementation)](#architecture-current-implementation)
-- [Feature list (implemented)](#feature-list-implemented)
-- [Local development](#local-development)
-- [Documentation map](#documentation-map)
+Nottermost allows users to:
 
-### Demo
+- Create and manage workspaces
+- Communicate via channels and direct messages
+- Collaborate in real-time with threads, reactions, and mentions
+- Share files with proper access control
+- Search across messages and conversations
 
-![Nottermost demo placeholder](docs/assets/demo.svg)
+## 🚀 Demo
 
-See also: `docs/overview/demo.md`.
+> _Coming soon_
 
-### What we built
+Planned demo will include:
 
-Nottermost is a **small monorepo** with:
+- Creating a workspace
+- Inviting members
+- Sending messages in channels and DMs
+- Realtime updates across multiple clients
+- Threaded conversations
+- File uploads and previews
 
-- **Web UI**: Next.js (`apps/web`)
-- **API**: Node.js + Express + Prisma (`apps/api`)
-- **Realtime**: WebSocket endpoint at `/ws` with Redis pub/sub fanout (`apps/api/src/ws/*`)
-- **Data**: Postgres (Prisma schema) + Redis
-- **Local orchestration**: `docker-compose.yml` + `.env`
+---
 
-### Architecture (current implementation)
+## Screenshots
 
-- **Auth**: email/password → JWT; HTTP uses `Authorization: Bearer <token>`, WebSocket uses `?token=...`
-- **HTTP API**: REST-ish endpoints under `/auth`, `/workspaces`, `/channels`, `/dm`, `/notifications`, `/files`, `/search`
-- **Realtime**:
-  - clients subscribe to channel IDs and DM thread IDs
-  - API publishes events to Redis (`channel:*`, `thread:*`)
-  - each API instance forwards events to subscribed WebSocket clients
+### Conversation view
 
-### Feature list (implemented)
+Direct message conversation with real-time delivery, reactions, and message history.
 
-The high-level list lives here: `docs/overview/features.md`.
+![Conversation view](screenshots/conversation-view.png)
 
-Highlights:
+---
 
-- **Workspaces**: create workspace, add members by email
-- **Channels**: public/private, invites, join flow, read state
-- **DMs**: direct and group, read state
-- **Messaging**: pagination, edit/delete, reactions, channel threads (root + replies)
-- **Presence + typing**: WebSocket-driven
-- **Notifications**: mention-style notifications with per-workspace notification prefs
-- **Files**: upload + authenticated download with channel/DM access checks
-- **Search**: membership-scoped search across channels + DMs (simple contains query)
+### Channel directory
 
-### Local development
+Browse and discover channels within a workspace, with clear separation between public and private spaces.
 
-- Copy `.env.example` → `.env`
-- Run `docker compose up --build`
-- Web: `http://localhost:3000`
-- API: `http://localhost:4000` (`/healthz`)
+![Channel directory](screenshots/channel-directory.png)
 
-Full guide: `docs/getting-started/local-development.md`.
+---
 
-### Documentation map
+### Profile settings
 
-- **Start here**
-  - `docs/overview/project.md`
-  - `docs/overview/features.md`
-  - `docs/overview/demo.md`
-- **Apps**
-  - `docs/apps/api.md`
-  - `docs/apps/web.md`
-- **Reference**
-  - `docs/reference/environment.md`
-  - `docs/reference/http-api.md`
-  - `docs/reference/websocket.md`
-  - `docs/reference/database.md`
-- **Deploy (WIP)**
-  - `docs/deploy/overview.md`
+Update your profile details and preferences (e.g., display name, avatar, and account-related settings).
+
+![Profile settings](screenshots/profile-settings.png)
+
+---
+
+## Core Concepts
+
+### Workspaces
+
+A workspace is the top-level container.
+
+It represents a team, organization, or group of users.
+
+Each workspace includes:
+- Members
+- Channels
+- Direct messages
+- Shared resources
+
+---
+
+### Channels
+
+Channels are group conversations inside a workspace.
+
+They can be:
+- **Public** – visible to all workspace members
+- **Private** – invite-only access
+
+Features:
+- Message history with pagination
+- Mentions (`@user`, `@channel`)
+- Reactions
+- Threaded replies
+
+---
+
+### Direct Messages (DMs)
+
+Private conversations between users.
+
+Supports:
+- 1:1 chats
+- Multi-user group conversations
+- Persistent message history
+
+---
+
+### Threads & Replies
+
+Messages can have replies, forming threads.
+
+This allows:
+- Focused side discussions
+- Reduced noise in main channels
+- Clear conversation structure
+
+---
+
+### Realtime Messaging
+
+Messages are delivered instantly using WebSockets.
+
+Supports:
+- Live message updates
+- Typing indicators
+- Reaction updates
+- Read-state changes
+
+---
+
+### Files & Attachments
+
+Users can upload and share files within conversations.
+
+Includes:
+- File previews
+- Access control (workspace/channel scoped)
+- Download permissions
+
+---
+
+### Search
+
+Global search allows users to find:
+
+- Messages
+- Channels
+- Conversations
+
+With filtering capabilities for better navigation.
+
+---
+
+### User Profiles
+
+Each user has:
+
+- Display name
+- Avatar
+- Status
+- Editable profile information
+
+<!-- CHECKPOINT id="ckpt_mobw9bt7_x91d67" time="2026-04-23T19:48:17.035Z" note="auto" fixes=0 questions=0 highlights=0 sections="" -->
+
+<!-- CHECKPOINT id="ckpt_mobwm6s0_fekcky" time="2026-04-23T19:58:17.040Z" note="auto" fixes=0 questions=0 highlights=0 sections="" -->
+
+<!-- CHECKPOINT id="ckpt_mobwz1qs_goylh8" time="2026-04-23T20:08:17.044Z" note="auto" fixes=0 questions=0 highlights=0 sections="" -->
+
+<!-- CHECKPOINT id="ckpt_mobxbwpr_1uzqxb" time="2026-04-23T20:18:17.055Z" note="auto" fixes=0 questions=0 highlights=0 sections="" -->

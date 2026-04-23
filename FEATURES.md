@@ -33,7 +33,7 @@ This file tracks which features are done, in progress, or not started.
 
 ### Documentation/meta
 - [X] Engineering guidelines for contributors + AI (`ENGINEERING_GUIDELINES.md`)
-- [X] GitHub Pages entrypoint (`index.md` renders `README.md`)
+- [X] GitHub Pages docs homepage (`index.md`)
 
 ### Channels
 - [X] Public/private channels

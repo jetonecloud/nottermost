@@ -26,9 +26,6 @@ export default function LoginPage() {
               <div className="authSubtitle">Sign in to continue</div>
             </div>
           </div>
-          <Link className="uiLink" href="/" title="Home">
-            Home
-          </Link>
         </div>
 
         <form
@@ -82,7 +79,6 @@ export default function LoginPage() {
             <span>
               New here? <Link href="/register">Create an account</Link>
             </span>
-            <span className="muted">JWT local dev</span>
           </div>
         </form>
       </div>
