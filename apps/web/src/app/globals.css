@@ -8,17 +8,17 @@
   --text: #0f172a;
   --muted: rgba(15, 23, 42, 0.62);
   --muted2: rgba(15, 23, 42, 0.48);
-  --accent: #0f766e;
-  --accent2: rgba(15, 118, 110, 0.14);
+  --accent: #6d28d9;
+  --accent2: rgba(109, 40, 217, 0.14);
   --danger: #b42318;
   --shadowSm: 0 1px 2px rgba(15, 23, 42, 0.06);
   --shadowMd: 0 10px 24px rgba(15, 23, 42, 0.10);
 
-  --radiusSm: 8px;
-  --radiusMd: 10px;
-  --radiusLg: 12px;
+  --radiusSm: 4px;
+  --radiusMd: 6px;
+  --radiusLg: 8px;
 
-  --sidebarBg: #0f172a;
+  --sidebarBg: #2b0a3d;
   --sidebarFg: rgba(255, 255, 255, 0.92);
   --sidebarMuted: rgba(255, 255, 255, 0.68);
   --sidebarHover: rgba(255, 255, 255, 0.10);
@@ -42,7 +42,7 @@ body {
   place-items: center;
   padding: 28px;
   background:
-    radial-gradient(900px 420px at 15% 10%, rgba(15, 118, 110, 0.11), transparent 60%),
+    radial-gradient(900px 420px at 15% 10%, rgba(109, 40, 217, 0.11), transparent 60%),
     radial-gradient(860px 520px at 85% 30%, rgba(15, 23, 42, 0.10), transparent 60%),
     var(--bg);
 }
@@ -74,7 +74,7 @@ body {
 .authLogo {
   width: 34px;
   height: 34px;
-  border-radius: 12px;
+  border-radius: var(--radiusLg);
   background: linear-gradient(145deg, rgba(11, 79, 214, 0.16), rgba(58, 13, 69, 0.12));
   border: 1px solid var(--border2);
   box-shadow: var(--shadowSm);
@@ -479,7 +479,7 @@ a.card:hover {
 /* UI primitives */
 .uiButton {
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: var(--radiusMd);
   cursor: pointer;
   font-weight: 500;
   letter-spacing: 0.15px;
@@ -556,7 +556,7 @@ a.card:hover {
 .uiInput,
 .uiTextArea {
   width: 100%;
-  border-radius: 10px;
+  border-radius: var(--radiusMd);
   border: 1px solid var(--border);
   background: var(--panel);
   color: var(--text);
@@ -568,7 +568,7 @@ a.card:hover {
 
 .uiInput:focus,
 .uiTextArea:focus {
-  border-color: rgba(15, 118, 110, 0.55);
+  border-color: rgba(109, 40, 217, 0.55);
   box-shadow: 0 0 0 4px var(--accent2);
 }
 
