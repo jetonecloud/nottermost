@@ -162,7 +162,7 @@ export default function WorkspaceLayout({ children }: { children: ReactNode }) {
       workspaceId={workspaceId}
       header={
         <div className="topbar">
-          <div className="topbarLeft" style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+          <div className="topbarLeft" style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0, flex: 1 }}>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -172,9 +172,19 @@ export default function WorkspaceLayout({ children }: { children: ReactNode }) {
                 if (!q) return;
                 router.push(`/app/workspaces/${workspaceId}/search?q=${encodeURIComponent(q)}`);
               }}
-              style={{ flex: 1, minWidth: 220, maxWidth: 520 }}
+              className="topbarSearch"
             >
-              <Input name="q" placeholder="Search…" />
+              <span className="topbarSearchIcon" aria-hidden="true">
+                <svg viewBox="0 0 20 20" width="16" height="16" fill="none">
+                  <path
+                    d="M9.2 15.6a6.4 6.4 0 1 1 0-12.8 6.4 6.4 0 0 1 0 12.8Z"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                  />
+                  <path d="M14.1 14.1 17.4 17.4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                </svg>
+              </span>
+              <Input name="q" placeholder="Search…" className="topbarSearchInput" />
             </form>
             {error ? <span className="topbarError">Error: {error}</span> : null}
           </div>
@@ -203,7 +213,6 @@ export default function WorkspaceLayout({ children }: { children: ReactNode }) {
         { title: "Workspace", items: [{ key: "home", href: `/app/workspaces/${workspaceId}`, label: "Home" }] },
         { title: "Channels", items: channelItems },
         { title: "Direct messages", items: dmItems },
-        { title: "Settings", items: [{ key: "settings", href: `/app/workspaces/${workspaceId}/settings`, label: "Settings" }] },
       ]}
     >
       {children}

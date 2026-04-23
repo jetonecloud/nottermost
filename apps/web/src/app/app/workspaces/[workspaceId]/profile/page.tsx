@@ -93,7 +93,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div style={{ padding: 16, overflow: "auto" }}>
+    <div style={{ padding: 16, height: "100%", minHeight: 0 }}>
       <div className="slackPage">
         <div className="slackPageHeader">
           <div>
@@ -174,10 +174,6 @@ export default function ProfilePage() {
 
                   {savedAt ? <div className="muted">Saved {savedAt}</div> : null}
                 </div>
-
-                <div className="muted" style={{ fontSize: 12 }}>
-                  Workspace ID: {workspaceId}
-                </div>
               </div>
             ) : null}
           </div>
@@ -204,7 +200,7 @@ export default function ProfilePage() {
                     }}
                   />
                   <span>
-                    <span style={{ fontWeight: 600 }}>Channel mention notifications</span>
+                    <span>Channel mention notifications</span>
                     <span className="muted" style={{ display: "block", fontSize: 12, marginTop: 4 }}>
                       When off, you will not receive notifications for channel mentions in this workspace.
                     </span>
@@ -222,7 +218,7 @@ export default function ProfilePage() {
                     }}
                   />
                   <span>
-                    <span style={{ fontWeight: 600 }}>Direct message mention notifications</span>
+                    <span>Direct message mention notifications</span>
                     <span className="muted" style={{ display: "block", fontSize: 12, marginTop: 4 }}>
                       When off, you will not receive notifications for <code>@local@domain.com</code> mentions inside DMs in this workspace.
                     </span>

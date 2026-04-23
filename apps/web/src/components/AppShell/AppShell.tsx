@@ -20,6 +20,8 @@ type SidebarSection = {
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
+  // Workspace "home" links should be exact-match only.
+  if (/\/app\/workspaces\/[^/]+$/.test(href)) return pathname === href;
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -116,23 +118,6 @@ export function AppShell({
                 </svg>
               </Icon>
             </Link>
-            <Link className="uiLink" href={`/app/workspaces/${workspaceId}/settings`} title="Settings">
-              <Icon title="Settings">
-                <svg viewBox="0 0 20 20" width="18" height="18" fill="none" aria-hidden="true">
-                  <path
-                    d="M10 12.6a2.6 2.6 0 1 0 0-5.2 2.6 2.6 0 0 0 0 5.2Z"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                  />
-                  <path
-                    d="M16.8 10a6.8 6.8 0 0 0-.1-1l1.2-.9-1.3-2.2-1.5.5a6.7 6.7 0 0 0-1.7-1L13 3H7l-.4 2.4a6.7 6.7 0 0 0-1.7 1l-1.5-.5L2 8.1l1.2.9a7.2 7.2 0 0 0 0 2L2 12l1.3 2.2 1.5-.5a6.7 6.7 0 0 0 1.7 1L7 17h6l.4-2.4a6.7 6.7 0 0 0 1.7-1l1.5.5L18 12l-1.2-.9c.1-.3.1-.7.1-1.1Z"
-                    stroke="currentColor"
-                    strokeWidth="1.3"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </Icon>
-            </Link>
           </div>
         </div>
 
@@ -161,7 +146,26 @@ export function AppShell({
           ))}
         </nav>
 
-        <div className="sidebarBottom" />
+        <div className="sidebarBottom">
+          <Link className="sidebarBottomItem" href={`/app/workspaces/${workspaceId}/settings`} title="Settings">
+            <span className="sidebarBottomIcon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" width="18" height="18" fill="none">
+                <path
+                  d="M10 12.6a2.6 2.6 0 1 0 0-5.2 2.6 2.6 0 0 0 0 5.2Z"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                />
+                <path
+                  d="M16.8 10a6.8 6.8 0 0 0-.1-1l1.2-.9-1.3-2.2-1.5.5a6.7 6.7 0 0 0-1.7-1L13 3H7l-.4 2.4a6.7 6.8 0 0 0-1.7 1l-1.5-.5L2 8.1l1.2.9a7.2 7.2 0 0 0 0 2L2 12l1.3 2.2 1.5-.5a6.7 6.7 0 0 0 1.7 1L7 17h6l.4-2.4a6.7 6.7 0 0 0 1.7-1l1.5.5L18 12l-1.2-.9c.1-.3.1-.7.1-1.1Z"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+            <span className="sidebarBottomLabel">Settings</span>
+          </Link>
+        </div>
       </aside>
 
       <div className="appMain">

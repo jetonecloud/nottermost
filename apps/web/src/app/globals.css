@@ -382,6 +382,36 @@ a.card:hover {
   border-top: 1px solid rgba(255, 255, 255, 0.10);
 }
 
+.sidebarBottomItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  border-radius: var(--radiusMd);
+  color: var(--sidebarFg);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sidebarBottomItem:hover {
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.sidebarBottomIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.sidebarBottomLabel {
+  font-weight: 600;
+  letter-spacing: 0.1px;
+}
+
 .appMain {
   display: flex;
   flex-direction: column;
@@ -760,6 +790,10 @@ a.card:hover {
   border-radius: var(--radiusLg);
   box-shadow: var(--shadowSm);
   overflow: hidden;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .slackPageHeader {
@@ -773,7 +807,7 @@ a.card:hover {
 }
 
 .slackPageTitle {
-  font-weight: 800;
+  font-weight: 650;
   letter-spacing: 0.2px;
 }
 
@@ -788,6 +822,9 @@ a.card:hover {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
 }
 
 .slackSection {
@@ -799,8 +836,32 @@ a.card:hover {
 }
 
 .slackSectionTitle {
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 10px;
+}
+
+/* Top bar search */
+.topbarLeft {
+  min-width: 0;
+}
+
+.topbarSearch {
+  position: relative;
+  width: min(720px, 58vw);
+  margin: 0 auto;
+}
+
+.topbarSearchIcon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(15, 23, 42, 0.62);
+  pointer-events: none;
+}
+
+.topbarSearchInput {
+  padding-left: 34px;
 }
 
 /* UI primitives */

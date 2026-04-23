@@ -20,6 +20,8 @@ export default function ChannelPage() {
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [body, setBody] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [channelName, setChannelName] = useState<string | null>(null);
+  const [userLabelById, setUserLabelById] = useState<Record<string, string>>({});
   const wsRef = useRef<WebSocket | null>(null);
   const [openThreadRootId, setOpenThreadRootId] = useState<string | null>(null);
   const [threadMessages, setThreadMessages] = useState<ChannelMessage[]>([]);
@@ -82,10 +84,20 @@ export default function ChannelPage() {
     async function boot() {
       setError(null);
       try {
-        const me = await apiFetch<{ id: string }>("/workspaces/me");
+        const [me, chans, members] = await Promise.all([
+          apiFetch<{ id: string }>("/workspaces/me"),
+          apiFetch<Array<{ id: string; name: string }>>(`/channels?workspaceId=${encodeURIComponent(workspaceId)}`),
+          apiFetch<Array<{ id: string; email: string; displayName?: string | null }>>(
+            `/workspaces/${workspaceId}/members`,
+          ),
+        ]);
         if (cancelled) return;
         myUserIdRef.current = me.id;
         setMyUserId(me.id);
+        setChannelName(chans.find((c) => c.id === channelId)?.name ?? null);
+        setUserLabelById(
+          Object.fromEntries(members.map((m) => [m.id, (m.displayName?.trim() || m.email).trim()])),
+        );
 
         await loadFirstPage();
         if (cancelled) return;
@@ -203,8 +215,7 @@ export default function ChannelPage() {
       <div className="chatPage">
         <div className="chatHeader">
           <div className="chatHeaderTitle">
-            <div className="chatHeaderPrimary"># channel</div>
-            <div className="chatHeaderSecondary">workspace {workspaceId} · channel {channelId}</div>
+            <div className="chatHeaderPrimary">#{channelName ?? "channel"}</div>
           </div>
           <div className="chatHeaderActions">
             {error ? <span className="topbarError">Error: {error}</span> : null}
@@ -226,6 +237,7 @@ export default function ChannelPage() {
                     channelId={channelId}
                     message={m}
                     myUserId={myUserId}
+                    userLabelById={userLabelById}
                     onError={(err) => setError(err)}
                     showReply
                     onOpenThread={() => {
@@ -363,7 +375,10 @@ export default function ChannelPage() {
 
               {typingUsers.size ? (
                 <div className="muted" style={{ fontSize: 12, marginTop: 8 }}>
-                  Typing: {Array.from(typingUsers).join(", ")}
+                  Typing:{" "}
+                  {Array.from(typingUsers)
+                    .map((u) => userLabelById[u] ?? u)
+                    .join(", ")}
                 </div>
               ) : null}
             </form>
@@ -413,6 +428,7 @@ export default function ChannelPage() {
                         channelId={channelId}
                         message={m}
                         myUserId={myUserId}
+                        userLabelById={userLabelById}
                         onError={(err) => setError(err)}
                         showReply={false}
                       />
