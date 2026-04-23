@@ -53,6 +53,7 @@ The format is based on **Keep a Changelog**, and this project aims to follow **S
   - `docs/` documentation scaffold (overview, getting started, apps, reference, deploy)
   - `ROADMAP.md` infra-first roadmap
   - Expanded docs homepage + initial “feature list” + demo placeholder image
+  - UI screenshots in `screenshots/` (conversation view, channel directory, profile settings)
 
 ### Changed
 - README tightened while preserving architecture; added operational maturity, production deployments, incident handling, scaling, and real-environment monitoring sections
@@ -63,6 +64,8 @@ The format is based on **Keep a Changelog**, and this project aims to follow **S
 - Web UI: remove internal IDs from the UI and display member/channel names instead; refine top-bar search + sidebar settings placement
 - Web UI: make workspace shell responsive (mobile sidebar toggle, collapse right rails/threads on small screens) and switch profile/workspace pages to full-bleed layouts
 - `index.md`: convert from “include README” to a docs homepage with links into `docs/`
+- README and docs homepage: add UI screenshots
+- Web UI: simplify auth page chrome (remove extra home link / dev-only footer text)
 
 ### Fixed
 - Local Docker builds: avoid `workspace:*` dependency spec in container npm installs
