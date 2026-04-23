@@ -136,7 +136,7 @@ export default function ThreadPage() {
         });
 
         ws.addEventListener("close", () => {
-          // noop (minimal local UX)
+          void 0;
         });
       } catch (err) {
         setError(err instanceof Error ? err.message : "boot_failed");
@@ -151,7 +151,7 @@ export default function ThreadPage() {
       try {
         ws?.close();
       } catch {
-        // ignore
+        void 0;
       }
     };
   }, [threadId]);
@@ -278,7 +278,7 @@ export default function ThreadPage() {
                           JSON.stringify({ type: "typing.start", scope: "dm", threadId } satisfies WsClientMessage),
                         );
                       } catch {
-                        // ignore
+                        void 0;
                       }
                     }}
                     onBlur={() => {
@@ -287,7 +287,7 @@ export default function ThreadPage() {
                           JSON.stringify({ type: "typing.stop", scope: "dm", threadId } satisfies WsClientMessage),
                         );
                       } catch {
-                        // ignore
+                        void 0;
                       }
                     }}
                   />

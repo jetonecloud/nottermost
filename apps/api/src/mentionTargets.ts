@@ -1,6 +1,6 @@
 import { prisma } from "./prisma.js";
 
-/** Matches legacy tokens like `@local@domain.tld` (leading @ stripped before email lookup). */
+/** Matches `@local@domain.tld` tokens (leading `@` stripped before email lookup). */
 export function extractEmailMentions(body: string): string[] {
   const matches = body.match(/@[^\s@]+@[^\s@]+\.[^\s@]+/g) ?? [];
   return Array.from(new Set(matches.map((m) => m.slice(1).toLowerCase())));

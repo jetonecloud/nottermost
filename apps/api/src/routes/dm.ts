@@ -516,7 +516,13 @@ dmRouter.post("/threads/:threadId/read", async (req, res) => {
     update: { lastReadAt },
   });
 
-  const wsPayload: WsServerMessage = { type: "readState.updated" as any, scope: "dm", threadId: threadId.data, userId, lastReadAt: lastReadAt.toISOString() } as any;
+  const wsPayload = {
+    type: "readState.updated",
+    scope: "dm",
+    threadId: threadId.data,
+    userId,
+    lastReadAt: lastReadAt.toISOString(),
+  } as unknown as WsServerMessage;
   void publishThreadEvent(threadId.data, wsPayload);
   return res.status(204).end();
 });

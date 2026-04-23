@@ -30,7 +30,7 @@ export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> 
     try {
       err = (await res.json()) as ApiError;
     } catch {
-      // ignore
+      // Best-effort parse of API error body; fall back to status code.
     }
     throw new Error(err?.error ?? `http_${res.status}`);
   }
@@ -67,7 +67,7 @@ export async function apiUploadFile(args: {
     try {
       err = (await res.json()) as ApiError;
     } catch {
-      // ignore
+      // Best-effort parse of API error body; fall back to status code.
     }
     throw new Error(err?.error ?? `http_${res.status}`);
   }

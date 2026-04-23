@@ -133,7 +133,7 @@ a {
   box-sizing: border-box;
 }
 
-/* Legacy helpers (keep for auth pages); workspace UI uses AppShell styles below. */
+/* Legacy layout helpers used by non-shell pages (auth, etc.). */
 .container {
   max-width: 980px;
   margin: 0 auto;

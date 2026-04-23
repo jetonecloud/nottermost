@@ -160,7 +160,7 @@ export default function ProfilePage() {
                         try {
                           window.dispatchEvent(new Event("nottermost.profile.updated"));
                         } catch {
-                          // ignore
+                          void 0;
                         }
                       } catch (err) {
                         setError(err instanceof Error ? err.message : "save_failed");
