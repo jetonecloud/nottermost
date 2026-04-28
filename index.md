@@ -2,7 +2,7 @@
 
 A **Mattermost-inspired** team chat platform built as a **distributed system on AWS**. The scope is intentionally **minimal but essential** to exercise real architecture, operations, and cost trade-offs end to end.
 
-## ✨ Overview
+## Overview
 
 Nottermost allows users to:
 
@@ -12,22 +12,7 @@ Nottermost allows users to:
 - Share files with proper access control
 - Search across messages and conversations
 
-## 🚀 Demo
-
-> _Coming soon_
-
-Planned demo will include:
-
-- Creating a workspace
-- Inviting members
-- Sending messages in channels and DMs
-- Realtime updates across multiple clients
-- Threaded conversations
-- File uploads and previews
-
----
-
-## Screenshots
+## Demo
 
 ### Conversation view
 
