@@ -65,6 +65,7 @@ The format is based on **Keep a Changelog**, and this project aims to follow **S
 - Web UI: make workspace shell responsive (mobile sidebar toggle, collapse right rails/threads on small screens) and switch profile/workspace pages to full-bleed layouts
 - `index.md`: convert from “include README” to a docs homepage with links into `docs/`
 - README and docs homepage: add UI screenshots
+- `index.md`: replace demo placeholder with screenshot-based demo section
 - Web UI: simplify auth page chrome (remove extra home link / dev-only footer text)
 
 ### Fixed

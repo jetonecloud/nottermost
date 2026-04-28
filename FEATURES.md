@@ -34,6 +34,7 @@ This file tracks which features are done, in progress, or not started.
 ### Documentation/meta
 - [X] Engineering guidelines for contributors + AI (`ENGINEERING_GUIDELINES.md`)
 - [X] GitHub Pages docs homepage (`index.md`)
+- [X] Docs homepage demo section uses real UI screenshots
 
 ### Channels
 - [X] Public/private channels
